@@ -1,6 +1,8 @@
 package baseutils
 
 import (
+	"time"
+
 	"gopkg.in/guregu/null.v4"
 )
 
@@ -11,7 +13,33 @@ func ExtractNullInt(data interface{}) (v null.Int) {
 	case float64:
 		v = null.NewInt(int64(data.(float64)), true)
 	}
+
 	return
+}
+
+// ExtractNullTime
+// extract a null.Time out of a string interface by parsing it in various formats
+func ExtractNullTime(data interface{}) (v null.Time) {
+	switch data.(type) {
+	case string:
+		date, err := time.Parse("2006-01-02T15:04:05", data.(string))
+		if err != nil {
+			date, err = time.Parse("2006-01-02T15:04:05Z", data.(string))
+			if err != nil {
+				date, err = time.Parse("2006-01-02T15:04:05-03:00", data.(string))
+				if err != nil {
+					date, err = time.Parse("2006-01-02T15:04:05+03:00", data.(string))
+					if err != nil {
+						return
+					}
+				}
+			}
+		}
+
+		v = null.NewTime(date, true)
+	}
+
+	return v
 }
 
 // ExtractNullString
@@ -23,6 +51,7 @@ func ExtractNullString(data interface{}) (v null.String) {
 			return null.NewString(data.(string), true)
 		}
 	}
+
 	return
 }
 
@@ -38,5 +67,6 @@ func ExtractStringArray(data interface{}) (v []string) {
 			}
 		}
 	}
+
 	return
 }
