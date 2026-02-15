@@ -8,7 +8,7 @@ import (
 
 // ExtractNullInt
 // extract a null.Int out of a interface that might not be int64
-func ExtractNullInt(data interface{}) (v null.Int) {
+func ExtractNullInt(data any) (v null.Int) {
 	switch data.(type) {
 	case float64:
 		v = null.NewInt(int64(data.(float64)), true)
@@ -19,7 +19,7 @@ func ExtractNullInt(data interface{}) (v null.Int) {
 
 // ExtractNullTime
 // extract a null.Time out of a string interface by parsing it in various formats
-func ExtractNullTime(data interface{}) (v null.Time) {
+func ExtractNullTime(data any) (v null.Time) {
 	switch data.(type) {
 	case string:
 		date, err := time.Parse("2006-01-02T15:04:05", data.(string))
@@ -44,7 +44,7 @@ func ExtractNullTime(data interface{}) (v null.Time) {
 
 // ExtractNullString
 // extract a null.String out of a interface that might not be string
-func ExtractNullString(data interface{}) (v null.String) {
+func ExtractNullString(data any) (v null.String) {
 	switch data.(type) {
 	case string:
 		if data.(string) != "" {
@@ -57,10 +57,10 @@ func ExtractNullString(data interface{}) (v null.String) {
 
 // ExtractStringArray
 // extract a array of strings out of an interface
-func ExtractStringArray(data interface{}) (v []string) {
+func ExtractStringArray(data any) (v []string) {
 	switch data.(type) {
-	case []interface{}:
-		for _, e := range data.([]interface{}) {
+	case []any:
+		for _, e := range data.([]any) {
 			switch e.(type) {
 			case string:
 				v = append(v, e.(string))

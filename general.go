@@ -9,7 +9,7 @@ import (
 
 // Empty
 // define an empty interface literal type to pass null as a parameter
-var Empty interface{}
+var Empty any
 
 // StringInSlice
 // check if the informed string is on the passed slice
@@ -25,9 +25,9 @@ func StringInSlice(a string, list []string) bool {
 
 // IsMap
 // check if the informed interface is an map of string to interface
-func IsMap(v interface{}) bool {
+func IsMap(v any) bool {
 	switch v.(type) {
-	case map[string]interface{}:
+	case map[string]any:
 		return true
 	}
 
@@ -66,7 +66,7 @@ func RandomString(length int, upperCase, lowerCase, numbers bool) string {
 
 // GetKey
 // get a key value of a interface within a string map
-func GetKey(needle string, haystack map[string]interface{}) interface{} {
+func GetKey(needle string, haystack map[string]any) any {
 	if val, ok := haystack[needle]; ok {
 		return val
 	} else {
