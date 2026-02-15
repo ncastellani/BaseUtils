@@ -11,18 +11,6 @@ import (
 // define an empty interface literal type to pass null as a parameter
 var Empty any
 
-// StringInSlice
-// check if the informed string is on the passed slice
-func StringInSlice(a string, list []string) bool {
-	for _, b := range list {
-		if b == a {
-			return true
-		}
-	}
-
-	return false
-}
-
 // IsMap
 // check if the informed interface is an map of string to interface
 func IsMap(v any) bool {
