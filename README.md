@@ -1,3 +1,3 @@
 
 ## BaseUtils
-General util functions for Go applications
+General util functions for Go applications.
