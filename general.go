@@ -1,10 +1,10 @@
 package baseutils
 
 import (
+	"crypto/rand"
 	"fmt"
 	"log"
-	"math/rand"
-	"time"
+	"math/big"
 )
 
 // Empty
@@ -41,12 +41,14 @@ func RandomString(length int, upperCase, lowerCase, numbers bool) string {
 		charset = charset + "0123456789"
 	}
 
-	// generate the random string and return
-	seededRand := rand.New(rand.NewSource(time.Now().UnixNano() - int64(rand.Int())))
+	// generate the random string using a CSPRNG and return
+	// crypto/rand never returns an error since Go 1.24
+	charsetLen := big.NewInt(int64(len(charset)))
 
 	b := make([]byte, length)
 	for i := range b {
-		b[i] = charset[seededRand.Intn(len(charset))]
+		n, _ := rand.Int(rand.Reader, charsetLen)
+		b[i] = charset[n.Int64()]
 	}
 
 	return string(b)
